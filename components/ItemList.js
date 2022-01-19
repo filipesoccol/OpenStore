@@ -1,6 +1,6 @@
 import React from "react";
 import Web3Modal from "web3modal";
-import { nftaddress, nftmarketaddress } from "../config";
+import { NFTAddress, NFTMarketAddress, RPCAddress, ProviderMatic } from "../public/config";
 import Card from "./Card";
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
 import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
@@ -23,10 +23,11 @@ const ItemList = () => {
   }, [filterCategory]);
 
   const getItems = async (category) => {
-    const provider = new ethers.providers.JsonRpcProvider();
-    const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
+    const provider = new ethers.providers.JsonRpcProvider()
+    // const provider = new ethers.providers.getDefaultProvider(ProviderMatic);
+    const tokenContract = new ethers.Contract(NFTAddress, NFT.abi, provider);
     const marketContract = new ethers.Contract(
-      nftmarketaddress,
+      NFTMarketAddress,
       NFTMarket.abi,
       provider
     );
@@ -76,7 +77,7 @@ const ItemList = () => {
     const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
 
     const transaction = await contract.createMarketSale(
-      nftaddress,
+      NFTAddress,
       nft.tokenId,
       {
         value: price,

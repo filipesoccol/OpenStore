@@ -1,6 +1,6 @@
 import React from "react";
 import Web3Modal from "web3modal";
-import { nftaddress, nftmarketaddress } from "../config";
+import { NFTAddress, NFTMarketAddress } from "../public/config";
 import UserCard from "./UserCard";
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
 import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
@@ -28,11 +28,11 @@ const ItemList = () => {
     const signer = provider.getSigner();
 
     const marketContract = new ethers.Contract(
-      nftmarketaddress,
+      NFTMarketAddress,
       NFTMarket.abi,
       signer
     );
-    const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
+    const tokenContract = new ethers.Contract(NFTAddress, NFT.abi, provider);
     const data = await marketContract.fetchPurchasedNFTs();
 
     console.log(data);
