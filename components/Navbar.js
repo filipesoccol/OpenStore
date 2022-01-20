@@ -2,8 +2,25 @@
 // import { Image } from "@chakra-ui/image";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import Web3ModalService from "../services/web3modal";
 
 export default function Navbar() {
+  const [account, setAccount] = useState();
+  
+  useEffect(() => {
+    handleConnect()
+    document.addEventListener('connect', handleConnect);
+  }, []);
+
+  const handleConnect = async () => {
+    if (Web3ModalService.getProvider()) setAccount(await Web3ModalService.getProvider().getSigner().getAddress()) 
+  }
+
+  const handleCallModal = () => {
+    Web3ModalService.callModal()
+  }
+
   return (
     <nav className="navbar navbar-expand-lg sticky-top ">
       <div className="container">
@@ -38,23 +55,13 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="link-background">
-              <Link
-                passHref={true}
-                href="/viewassets"
-                className="nav-link left"
-              >
-                <a className={"nav-link left"}>View your assets</a>
+              <Link passHref={true} href="/dashboard">
+                <a className="nav-link left">Your Assets</a>
               </Link>
             </li>
             <li className="link-background">
-              <Link passHref={true} href="/creator-dashboard">
-                <a className="nav-link left">Dashboard</a>
-              </Link>
-            </li>
-            <li className="link-background">
-              <Link passHref={true} href="/about" className="nav-link left">
-                <a className={"nav-link left"}> About Us</a>
-              </Link>
+              {!account && <button onClick={handleCallModal}>Connect Wallet</button>}
+              {account && <div>{account.substring(0,4)} ... {account.substring(account.length-5,account.length)}</div>}
             </li>
           </ul>
         </div>

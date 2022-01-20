@@ -4,7 +4,7 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import WaveFooter from "../components/WaveFooter";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import Web3Modal from "web3modal";
+import Web3ModalService from "../services/web3modal";
 import Script from "next/script";
 import Head from "next/head";
 import Footer from "../components/Footer";
@@ -21,34 +21,50 @@ export default function CreateItem() {
     price: "",
     name: "",
     category: "",
-    fileUrl: null,
+    image: null,
+    meta: null,
     description: "",
   });
   const router = useRouter();
 
-  async function onChange(e) {
+  async function onChangeThumbnail(e) {
     const file = e.target.files[0];
     try {
       const added = await client.add(file, {
         progress: (prog) => console.log(`received: ${prog}`),
       });
-      const fileUrl = `https://ipfs.infura.io/ipfs/${added.path}`;
-      setValues({ ...values, fileUrl });
+      const image = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setValues({ ...values, image });
     } catch (error) {
       console.log("Error uploading file: ", error);
     }
   }
+
+  async function onChangeFile(e) {
+    const file = e.target.files[0];
+    try {
+      const added = await client.add(file, {
+        progress: (prog) => console.log(`received: ${prog}`),
+      });
+      const meta = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setValues({ ...values, meta });
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
+  }
+
   async function createMarket() {
-    const { name, description, price, fileUrl, category } = values;
+    const { name, description, price, image, category } = values;
     if (!name || !description || !price || !fileUrl || !category) return;
     /* first, upload to IPFS */
-    const data = JSON.stringify({
+    const metadata = JSON.stringify({
       name,
       description,
-      image: fileUrl,
+      image,
+      meta
     });
     try {
-      const added = await client.add(data);
+      const added = await client.add(metadata);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
       createSale(url);
@@ -58,10 +74,8 @@ export default function CreateItem() {
   }
 
   async function createSale(url) {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
+    if (!Web3ModalService.getProvider()) await Web3ModalService.callModal()
+    const signer = Web3ModalService.getProvider().getSigner();
     console.log(url);
 
     /* next, create the item */
@@ -175,13 +189,23 @@ export default function CreateItem() {
                     />
                   </li>
                   <li>
-                    <label htmlFor="id_image">Asset Image:</label>{" "}
+                    <label htmlFor="id_image">Asset Thumbnail:</label>{" "}
                     <input
                       type="file"
                       accept="image/*"
                       name="Asset"
                       className="my-4"
-                      onChange={onChange}
+                      onChange={onChangeThumbnail}
+                    />
+                  </li>
+                  <li>
+                    <label htmlFor="id_image">Asset File:</label>{" "}
+                    <input
+                      type="file"
+                      accept="*"
+                      name="Asset"
+                      className="my-4"
+                      onChange={onChangeFile}
                     />
                   </li>
                 </ul>

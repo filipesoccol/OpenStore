@@ -1,9 +1,11 @@
+import Image from 'next/image'
+
 export default function Itemview() {
   return (
     <div className="container">
       <div className="row ">
         <div className="col-md-6 text-center">
-          <img
+          <Image
             width="100%"
             src="iphone.png"
             alt=""
@@ -22,7 +24,7 @@ export default function Itemview() {
           >
             <div className="modal-dialog modal-lg modal-dialog modal-dialog-centered">
               <div className="modal-content">
-                <img width="100%" src="iphone.png" alt="" />
+                <Image width="100%" src="iphone.png" alt="" />
               </div>
             </div>
           </div>

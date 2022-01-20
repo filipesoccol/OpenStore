@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export",
+    "deploy": "push-dir --dir=out --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -20,6 +22,7 @@
     "ethers": "^5.5.3",
     "hardhat": "^2.6.4",
     "ipfs-http-client": "50.1.2",
+    "ipfs-http-client-lite": "^0.3.0",
     "jsonwebtoken": "^8.5.1",
     "next": "11.1.2",
     "pg": "^8.7.1",
@@ -32,6 +35,7 @@
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "postcss": "^8.3.8",
+    "push-dir": "^0.4.1",
     "tailwindcss": "^2.2.15"
   }
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import Web3Modal from "web3modal";
 import { NFTAddress, NFTMarketAddress } from "../public/config";
 import UserCard from "./UserCard";
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
 import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
+import Web3ModalService from "../services/web3modal";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
@@ -13,20 +13,18 @@ const ItemList = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getItems();
-    setIsLoading(false);
+    setTimeout( async () => {
+      setIsLoading(true);
+      await Web3ModalService.callModal()
+      await getItems();
+      setIsLoading(false);
+    }, 0)
   }, []);
 
   const getItems = async () => {
-    const web3Modal = new Web3Modal({
-      network: "mumbai",
-      cacheProvider: true,
-    });
-
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    if (!Web3ModalService.getProvider) await Web3ModalService.callModal()
+    const provider = Web3ModalService.getProvider()
     const signer = provider.getSigner();
-
     const marketContract = new ethers.Contract(
       NFTMarketAddress,
       NFTMarket.abi,
@@ -34,8 +32,6 @@ const ItemList = () => {
     );
     const tokenContract = new ethers.Contract(NFTAddress, NFT.abi, provider);
     const data = await marketContract.fetchCreateNFTs();
-
-    console.log(data);
 
     let newItems = await Promise.all(
       data.map(async (d) => {
