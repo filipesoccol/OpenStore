@@ -26,14 +26,15 @@ export default function Navbar() {
       <div className="container">
         <Link passHref={true} href="/" className="navbar-brand">
           <div id="leftlogo">
-            <Image
+            {/* <Image
               src="/assets/navbar-logo-new.svg"
               alt="Navbar Logo"
               className="d-inline-block align-top"
               loading="lazy"
               width="100"
               height="100"
-            />
+            /> */}
+            <h3>Logo</h3>
           </div>
         </Link>
         <button
@@ -55,13 +56,8 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="link-background">
-              <Link passHref={true} href="/dashboard">
-                <a className="nav-link left">Your Assets</a>
-              </Link>
-            </li>
-            <li className="link-background">
-              {!account && <button onClick={handleCallModal}>Connect Wallet</button>}
-              {account && <div>{account.substring(0,4)} ... {account.substring(account.length-5,account.length)}</div>}
+              {!account && <button className="btn commonbutton5" onClick={handleCallModal}>Connect Wallet</button>}
+              {account && <Link passHref={true} href="/dashboard"><button className="btn commonbutton5">{account.substring(0,4)}...{account.substring(account.length-5,account.length)}</button></Link>}
             </li>
           </ul>
         </div>

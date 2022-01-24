@@ -58,6 +58,7 @@ const Web3ModalService = {
     const connection = await this.web3Modal.connect()
     this.provider = new ethers.providers.Web3Provider(connection);
     document.dispatchEvent(new CustomEvent('connect'))
+    window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId: '0x89'}]});
     return this.provider
   },
   disconnect: function () {

@@ -5,15 +5,7 @@ export default function Display() {
     <div className="below-navbar-container">
       <div className="container">
         <div className="row">
-          <div className="col-md-6 text-center vanish-mobile">
-            <section id="right_below_navbar_svg">
-              <Image
-                src="/assets/marketplace.svg"
-                loading="eager"
-                layout="fill"
-                alt="Iphone icon"
-              />
-            </section>
+          <div className="d-none d-md-block col-md-6 text-center">
           </div>
           <div className="col-md-6">
             <div className="box-for-names" id="hello-world">

@@ -11,7 +11,7 @@ import axios from "axios";
 const ItemList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filterCategory, setFilterCategory] = useState("All");
+  const [filterCategory, setFilterCategory] = useState("all");
 
   useEffect(() => {
     async function fetchData() {
@@ -31,7 +31,7 @@ const ItemList = () => {
       provider
     );
     let data;
-    if (category == "All") {
+    if (category == "all") {
       data = await marketContract.getMarketItems();
     } else {
       data = await marketContract.getItemsByCategory(category);
@@ -44,14 +44,15 @@ const ItemList = () => {
         const tokenUri = await tokenContract.tokenURI(d.tokenId);
         const meta = await axios.get(tokenUri);
         const price = ethers.utils.formatUnits(d.price.toString(), "ether");
-
         return {
           price,
           tokenId: d.tokenId.toNumber(),
           seller: d.seller,
           owner: d.owner,
           image: meta.data.image,
+          meta: meta.data.meta,
           name: meta.data.name,
+          category: d.category,
           description: meta.data.description,
         };
       })
@@ -85,33 +86,20 @@ const ItemList = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-      }}
-    >
-      <div style={{ width: "200px" }}>
-        <label htmlFor="category">Category:</label>{" "}
+    <div className="d-flex flex-column gap-4">
+      <div className="col-12 col-sm-6 col-md-4 mb-4">
         <select
           name="category"
           id="category"
           onChange={(e) => setFilterCategory(e.target.value)}
         >
-          <option value="All">All</option>
-          <option value="Art">Art</option>
-          <option value="Graphics">Graphics</option>
-          <option value="Others">Others</option>
+          <option value="all">All</option>
+          <option value="art">Art</option>
+          <option value="track">Track</option>
+          <option value="others">Others</option>
         </select>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="col-12 d-flex flex-row flex-wrap">
         {items.length > 0 ? (
           items.map((item, key) => (
             <Card key={key} buyNft={buyNft} data={item} />

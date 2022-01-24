@@ -9,9 +9,7 @@ import Head from "next/head";
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
 import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
 import Display from "../components/Display";
-import TopWaveFooter from "../components/TopWaveFooter";
 import ItemList from "../components/ItemList";
-import WaveFooter from "../components/WaveFooter";
 import Footer from "../components/Footer";
 
 export default function Home() {
@@ -24,7 +22,6 @@ export default function Home() {
         <meta name="description" content="Blockchain based NFT application" />
       </Head>
       <Display />
-      <TopWaveFooter />
       <main
         style={{ marginTop: "30px", marginBottom: "50px", minHeight: "50vh" }}
       >
@@ -40,7 +37,6 @@ export default function Home() {
       </main>
 
       <footer>
-        <WaveFooter />
         <Footer />
       </footer>
     </div>

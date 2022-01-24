@@ -2,6 +2,7 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
+import ItemModal from "../components/ItemModal";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,26 +16,19 @@ function MyApp({ Component, pageProps }) {
           crossOrigin="anonymous"
         />
         {/* // eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;600;700&display=swap" rel="stylesheet"></link>
+        {/* <link
           href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300&display=swap"
           rel="stylesheet"
           crossOrigin="anonymous"
-        />
+        /> */}
         <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
           crossOrigin="anonymous"
-        />
-        <script
-          src="https://code.jquery.com/jquery-3.3.1.js"
-          integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-          async
-        />
-        <script
-          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-          integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-          async
         />
         <script
           src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
@@ -43,6 +37,7 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <Navbar />
+      <ItemModal/>
       <Component {...pageProps} />
     </>
   );

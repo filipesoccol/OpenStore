@@ -1,20 +1,10 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import Head from "next/head";
-import Image from "next/image";
 import Script from "next/script";
 
 import Navbar from "../components/Navbar";
-import Display from "../components/Display";
-
-import TopWaveFooter from "../components/TopWaveFooter";
-
-import Card from "../components/Card";
-import Team from "../components/Team";
 import Itemview from "../components/ItemView";
 
-
-
-import WaveFooter from "../components/WaveFooter";
 import Footer from "../components/Footer";
 
 export default function QuickView() {
@@ -25,17 +15,6 @@ export default function QuickView() {
                 <title>Blockchain Based NFT Application</title>
                 <meta name="description" content="Blockchain based NFT application" />
                 <link rel="icon" href="/favicon.png" />
-
-                <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-                />
-                {/* // eslint-disable-next-line @next/next/no-page-custom-font */}
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300&display=swap"
-                    rel="stylesheet"
-                />
-
                 <link
                     rel="stylesheet"
                     href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
@@ -49,7 +28,6 @@ export default function QuickView() {
             <main>
             </main>
             <footer>
-                <WaveFooter />
                 <Footer />
                 <script
                     src="https://code.jquery.com/jquery-3.3.1.js"
@@ -66,8 +44,6 @@ export default function QuickView() {
                     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
                     async
                 ></script>
-          
-    
             </footer>
         </div>
     );

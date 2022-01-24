@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import WaveFooter from "../components/WaveFooter";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Web3ModalService from "../services/web3modal";
@@ -54,14 +53,15 @@ export default function CreateItem() {
   }
 
   async function createMarket() {
-    const { name, description, price, image, category } = values;
-    if (!name || !description || !price || !fileUrl || !category) return;
+    const { name, description, price, image, meta, category } = values;
+    if (!name || !description || !price || !image || !meta || !category) return;
     /* first, upload to IPFS */
     const metadata = JSON.stringify({
       name,
       description,
       image,
-      meta
+      meta,
+      attributes: [{category}]
     });
     try {
       const added = await client.add(metadata);
@@ -132,19 +132,8 @@ export default function CreateItem() {
 
       <main>
         <h1 className="text-center my-5 header display-4">Create Asset</h1>
-
         <div style={{ marginBottom: "50px" }} className="container ">
-          <div className="row ">
-            <div
-              className="col-sm-6 block-to-disappear-in-mobile "
-              style={{ padding: "30px" }}
-            >
-              <Image
-                src="https://res.cloudinary.com/dnv3ztqf1/image/upload/v1632635884/devathon/create-asset_nvz7xi.svg"
-                layout="fill"
-                alt="image htmlFor add doctor"
-              />
-            </div>
+          <div className="row justify-content-center">
             <div className="col-sm-6">
               <for action="/adddoctor" method="POST" className="form-group">
                 <input
@@ -189,45 +178,60 @@ export default function CreateItem() {
                     />
                   </li>
                   <li>
-                    <label htmlFor="id_image">Asset Thumbnail:</label>{" "}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      name="Asset"
-                      className="my-4"
-                      onChange={onChangeThumbnail}
-                    />
-                  </li>
-                  <li>
-                    <label htmlFor="id_image">Asset File:</label>{" "}
-                    <input
-                      type="file"
-                      accept="*"
-                      name="Asset"
-                      className="my-4"
-                      onChange={onChangeFile}
-                    />
+                    <label htmlFor="category">Category:</label>{" "}
+                    <select name="category" id="category" onChange={handleChange}>
+                      <option value="">Select a category</option>
+                      <option value="art">Art</option>
+                      <option value="track">Track</option>
+                      <option value="video">Video</option>
+                      <option value="others">Others</option>
+                    </select>
                   </li>
                 </ul>
-                <div style={{ width: "100%" }}>
-                  <div className="text-center">
-                    {values.fileUrl && (
-                      <Image
-                        src={values.fileUrl}
-                        height="350"
-                        width="350"
-                        alt="Product image"
-                      />
-                    )}
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    <ul className="unordered-list">
+                      <li>
+                        <label htmlFor="id_thumbnail" className="btn commonbutton5 btn-block">Upload Thumbnail</label>{" "}
+                        <input
+                          id="id_thumbnail"
+                          type="file"
+                          accept="image/*"
+                          name="Asset"
+                          className="my-4 d-none btn commonbutton5"
+                          onChange={onChangeThumbnail}
+                        />
+                      </li>
+                      <li>
+                        <label htmlFor="id_file" className="btn commonbutton5 btn-block">Upload Asset File</label>{" "}
+                        <input
+                          id="id_file"
+                          type="file"
+                          accept="*"
+                          name="Asset"
+                          className="my-4 d-none"
+                          onChange={onChangeFile}
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="col-12 col-md-6 d-flex justify-content-center">
+                    <div className="thumbnail-preview">
+                      {values.image && (
+                        <Image
+                          className="thumbnail-image"
+                          src={values.image}
+                          height="150"
+                          width="150"
+                          alt="Product image"
+                        />
+                      )}
+                      {!values.image && (
+                        <div>No Preview</div>
+                      )}
+                    </div>
                   </div>
                 </div>
-                <label htmlFor="category">Category:</label>{" "}
-                <select name="category" id="category" onChange={handleChange}>
-                  <option value="">Select a category</option>
-                  <option value="Art">Art</option>
-                  <option value="Graphics">Graphics</option>
-                  <option value="Others">Others</option>
-                </select>
                 <button
                   onClick={createMarket}
                   className="btn mt-5 btn-block commonbutton5"
@@ -241,7 +245,6 @@ export default function CreateItem() {
         </div>
       </main>
       <footer>
-        <WaveFooter />
         <Footer />
       </footer>
     </div>
