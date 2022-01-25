@@ -38,4 +38,3 @@ yarn-error.log*
 # hardhat files
 /artifacts
 /cache
-config.js

@@ -1,0 +1,5 @@
+export const NFTAddress = '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9'
+export const NFTMarketAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0'
+export const RPCAddress = 'https://rpc-mumbai.matic.today'
+export const IPFSInfuraID = '23xu19WznNGKn8NgERyyLGsYRyY'
+export const IPFSInfuraKey = 'b0ff4954782fffbe87de7b404c6d5316'

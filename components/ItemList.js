@@ -1,9 +1,9 @@
 import React from "react";
 import Web3ModalService from "../services/web3modal";
-import { NFTAddress, NFTMarketAddress, RPCAddress, ProviderMatic } from "../public/config";
+import { NFTAddress, NFTMarketAddress } from "../services/config";
 import Card from "./Card";
-import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
-import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
+import NFT from "./artifacts/NFT.json";
+import NFTMarket from "./artifacts/NFTMarket.json";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";

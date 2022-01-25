@@ -120,7 +120,7 @@ a.left:hover:before {
 }
 
 .below-navbar-container {
-  background-image: url("../public/assets/hand.jpeg"), linear-gradient(right, #000, #fff);
+  background-image: url("../public/assets/hand.jpeg");
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;

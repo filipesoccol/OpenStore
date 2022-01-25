@@ -1,19 +1,19 @@
+import Script from "next/script";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Web3ModalService from "../services/web3modal";
-import Script from "next/script";
-import Head from "next/head";
 import Footer from "../components/Footer";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
-import { NFTAddress, NFTMarketAddress } from "../public/config";
+import { NFTAddress, NFTMarketAddress } from "../services/config";
 
-import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
-import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
+import NFT from "../components/artifacts/NFT.json";
+import NFTMarket from "../components/artifacts/NFTMarket.json";
 
 export default function CreateItem() {
   const [values, setValues] = useState({

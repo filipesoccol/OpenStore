@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Web3ModalService from "../services/web3modal";
 
-import { NFTAddress, NFTMarketAddress, RPCAddress, ProviderMatic, ProviderLocalhost } from "../public/config";
+import { NFTAddress, NFTMarketAddress, RPCAddress, ProviderMatic, ProviderLocalhost } from "../services/config";
 import Script from "next/script";
 import Head from "next/head";
-import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
-import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
+import NFT from "../components/artifacts/NFT.json";
+import NFTMarket from "../components/artifacts/NFTMarket.json";
 import Display from "../components/Display";
 import ItemList from "../components/ItemList";
 import Footer from "../components/Footer";
@@ -16,7 +16,6 @@ export default function Home() {
 
   return (
     <div>
-      <Script src="https://kit.fontawesome.com/a076d05399.js" />
       <Head>
         <title>Blockchain Based NFT Application</title>
         <meta name="description" content="Blockchain based NFT application" />
