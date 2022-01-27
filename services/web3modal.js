@@ -6,8 +6,39 @@ import Web3Modal from 'web3modal'
 export const ProviderMatic = {
     name: 'maticmum',
     chainId: 80001,
-    _defaultProvider: (providers) => new providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+    _defaultProvider: (providers) => new providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com/')
 };
+
+export async function suggestNetwork(id) {
+  
+  let networkData;
+
+  switch (id) {
+    case 80001:
+      networkData = [
+        {
+          chainId: "0x13881",
+          chainName: "Mumbai TestNet",
+          rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+          nativeCurrency: {
+            name: "MATIC",
+            symbol: "MATIC",
+            decimals: 18,
+          },
+          blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+        },
+      ];
+      break;
+    default:
+      break;
+  }
+
+  await window.ethereum.request({
+    method: "wallet_addEthereumChain",
+    params: networkData,
+  });
+  await window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId: `0x${id.toString(16)}`}]});
+}
 
 const Web3ModalService = {
   provider: undefined,
@@ -26,11 +57,11 @@ const Web3ModalService = {
   // Used to fetch provider even Disconnected
   getEthers: function () {
     if (!this.provider) {
-      if (window.location.hostname == 'localhost'){
-        return new ethers.providers.JsonRpcProvider()
-      } else {
+      // if (window.location.hostname == 'localhost'){
+      //   return new ethers.providers.JsonRpcProvider()
+      // } else {
         return new ethers.providers.getDefaultProvider(ProviderMatic);
-      }
+      // }
     //   const account = this.web3.eth.accounts.create();
     //   this.web3.eth.accounts.wallet.add(account)
     }
@@ -56,9 +87,10 @@ const Web3ModalService = {
     //   },
     })
     const connection = await this.web3Modal.connect()
+    console.log(connection)
     this.provider = new ethers.providers.Web3Provider(connection);
     document.dispatchEvent(new CustomEvent('connect'))
-    window.ethereum.request({ method: 'wallet_switchEthereumChain', params:[{chainId: '0x89'}]});
+    suggestNetwork(80001)
     return this.provider
   },
   disconnect: function () {

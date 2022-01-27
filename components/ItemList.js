@@ -47,6 +47,7 @@ const ItemList = () => {
         return {
           price,
           tokenId: d.tokenId.toNumber(),
+          itemId: d.itemId.toNumber(),
           seller: d.seller,
           owner: d.owner,
           image: meta.data.image,
@@ -70,19 +71,19 @@ const ItemList = () => {
       NFTMarket.abi,
       signer
     );
-
+    console.log(nft)
     const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
-
+    console.log(nft.price, price.toString())
     const transaction = await contract.createMarketSale(
       NFTAddress,
-      nft.tokenId,
+      nft.itemId,
       {
-        value: price,
+        value: price.toString(),
       }
     );
     const tx = await transaction.wait();
     console.log(tx);
-    getItems("All");
+    getItems("all");
   };
 
   return (

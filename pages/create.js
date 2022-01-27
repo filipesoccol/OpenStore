@@ -23,6 +23,7 @@ export default function CreateItem() {
     image: null,
     meta: null,
     description: "",
+    royalties: 0,
   });
   const router = useRouter();
 
@@ -100,6 +101,7 @@ export default function CreateItem() {
         NFTAddress,
         tokenId,
         price,
+        values.royalties.toString(),
         values.category,
         {
           value: listingPrice,
@@ -125,121 +127,125 @@ export default function CreateItem() {
 
   return (
     <div>
-      <Script src="https://kit.fontawesome.com/a076d05399.js" />
       <Head>
         <title>Create Asset</title>
       </Head>
-
       <main>
         <h1 className="text-center my-5 header display-4">Create Asset</h1>
         <div style={{ marginBottom: "50px" }} className="container ">
           <div className="row justify-content-center">
             <div className="col-sm-6">
-              <for action="/adddoctor" method="POST" className="form-group">
-                <input
-                  type="hidden"
-                  name="csrfmiddlewaretoken"
-                  value="fIwiR9rbZTmvxfmW8gC8CiS93Zx36iAh0kdWjuhKGglTMld96xGITqBEbdBR4EkY"
-                />
-                <ul className="unordered-list">
-                  <li>
-                    <label htmlFor="id_name">Asset Name:</label>{" "}
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Asset Name"
-                      maxLength="500"
-                      required
-                      onChange={handleChange}
-                      id="id_name"
-                    />
-                  </li>
-                  <li>
-                    <label htmlFor="id_description">Asset Description</label>{" "}
-                    <textarea
-                      type="text"
-                      name="description"
-                      style={{ height: "20vh", resize: "none" }}
-                      maxLength="500"
-                      placeholder="Describe your asset in 500 or less characters"
-                      required
-                      onChange={handleChange}
-                      id="id_description"
-                    />
-                  </li>
-                  <li>
-                    <label htmlFor="id_price_in_eth">Asset price in ETH:</label>{" "}
-                    <input
-                      type="number"
-                      name="price"
-                      required
-                      onChange={handleChange}
-                      id="id_price_in_eth"
-                    />
-                  </li>
-                  <li>
-                    <label htmlFor="category">Category:</label>{" "}
-                    <select name="category" id="category" onChange={handleChange}>
-                      <option value="">Select a category</option>
-                      <option value="art">Art</option>
-                      <option value="track">Track</option>
-                      <option value="video">Video</option>
-                      <option value="others">Others</option>
-                    </select>
-                  </li>
-                </ul>
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <ul className="unordered-list">
-                      <li>
-                        <label htmlFor="id_thumbnail" className="btn commonbutton5 btn-block">Upload Thumbnail</label>{" "}
-                        <input
-                          id="id_thumbnail"
-                          type="file"
-                          accept="image/*"
-                          name="Asset"
-                          className="my-4 d-none btn commonbutton5"
-                          onChange={onChangeThumbnail}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="id_file" className="btn commonbutton5 btn-block">Upload Asset File</label>{" "}
-                        <input
-                          id="id_file"
-                          type="file"
-                          accept="*"
-                          name="Asset"
-                          className="my-4 d-none"
-                          onChange={onChangeFile}
-                        />
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col-12 col-md-6 d-flex justify-content-center">
-                    <div className="thumbnail-preview">
-                      {values.image && (
-                        <Image
-                          className="thumbnail-image"
-                          src={values.image}
-                          height="150"
-                          width="150"
-                          alt="Product image"
-                        />
-                      )}
-                      {!values.image && (
-                        <div>No Preview</div>
-                      )}
-                    </div>
+              <ul className="unordered-list">
+                <li>
+                  <label htmlFor="id_name">Asset Name:</label>{" "}
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Asset Name"
+                    maxLength="500"
+                    required
+                    onChange={handleChange}
+                    id="id_name"
+                  />
+                </li>
+                <li>
+                  <label htmlFor="id_description">Asset Description</label>{" "}
+                  <textarea
+                    type="text"
+                    name="description"
+                    style={{ height: "20vh", resize: "none" }}
+                    maxLength="500"
+                    placeholder="Describe your asset in 500 or less characters"
+                    required
+                    onChange={handleChange}
+                    id="id_description"
+                  />
+                </li>
+                <p className="small">- For the first sell, the platform will retain 40% of the asset price.</p>
+                <p className="small">- For the subsequent sells you(as creator) will earn the integrity of royalties chosen.</p>
+                <li>
+                  <label htmlFor="id_price_in_eth">Asset price in ETH:</label>{" "}
+                  <input
+                    type="number"
+                    name="price"
+                    required
+                    onChange={handleChange}
+                    id="id_price_in_eth"
+                  />
+                </li>
+                <li>
+                  <label htmlFor="id_price_in_eth">Royalties amount in percentage:</label>{" "}
+                  <input
+                    type="range" min="0" max="99" step="1" value={values.royalties}
+                    name="royalties"
+                    required
+                    onChange={handleChange}
+                    id="id_royalties"
+                  />
+                  <span className="ml-3 position-relative">{values.royalties}%</span>
+                </li>
+                <li>
+                  <label htmlFor="category">Category:</label>{" "}
+                  <select name="category" id="category" onChange={handleChange}>
+                    <option value="">Select a category</option>
+                    <option value="art">Art</option>
+                    <option value="track">Track</option>
+                    <option value="video">Video</option>
+                    <option value="others">Others</option>
+                  </select>
+                </li>
+              </ul>
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <ul className="unordered-list">
+                    <li>
+                      <label htmlFor="id_thumbnail" className="btn commonbutton5 btn-block">Upload Thumbnail</label>{" "}
+                      <input
+                        id="id_thumbnail"
+                        type="file"
+                        accept="image/*"
+                        name="Asset"
+                        className="my-4 d-none btn commonbutton5"
+                        onChange={onChangeThumbnail}
+                      />
+                    </li>
+                    <li>
+                      <label htmlFor="id_file" className="btn commonbutton5 btn-block">Upload Asset File</label>{" "}
+                      <input
+                        id="id_file"
+                        type="file"
+                        accept="*"
+                        name="Asset"
+                        className="my-4 d-none"
+                        onChange={onChangeFile}
+                      />
+                    </li>
+                  </ul>
+                </div>
+                <div className="col-12 col-md-6 d-flex justify-content-center">
+                  <div className="thumbnail-preview">
+                    {values.image && (
+                      <Image
+                        className="thumbnail-image"
+                        src={values.image}
+                        height="150"
+                        width="150"
+                        alt="Product image"
+                      />
+                    )}
+                    {!values.image && (
+                      <div>No Preview</div>
+                    )}
                   </div>
                 </div>
-                <button
-                  onClick={createMarket}
-                  className="btn mt-5 btn-block commonbutton5"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </for>
+              </div>
+              <button
+                onClick={createMarket}
+                className="btn mt-5 btn-block commonbutton5"
+                type="submit"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </div>

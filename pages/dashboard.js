@@ -8,7 +8,6 @@ import Dashboard from "../components/Dashboard.js";
 export default function Home() {
   return (
     <div>
-      <Script src="https://kit.fontawesome.com/a076d05399.js" />
       <Head>
         <title>Blockchain Based NFT Application</title>
         <meta name="description" content="Blockchain based NFT application" />
