@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import MaticIcon from './MaticIcon';
 
 export default function Itemview() {
   return (
@@ -54,7 +55,7 @@ export default function Itemview() {
           <h1 className="display-4 ">IPhone</h1>
           <span className="big-text">5.000</span>
 
-          <span className="small-text"> ETH</span>
+          <span className="small-text"> <MaticIcon/></span>
 
           <h5 className="display-6" text-justify>
             <b>Created by :</b> XYZ

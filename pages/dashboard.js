@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import Head from "next/head";
 import Script from "next/script";
-import OwnAssestList from "../components/OwnAssestList";
+import OwnAssestList from "../components/OwnAssetsList";
 import Footer from "../components/Footer.js";
-import Dashboard from "../components/Dashboard.js";
+import CreatedAssetsList from "../components/CreatedAssetsList.js";
 
 export default function Home() {
   return (
@@ -22,14 +22,18 @@ export default function Home() {
           >
             Created Assets
           </h1>
-          <Dashboard />
+          <div className="d-flex flex-column gap-4">
+              <CreatedAssetsList />
+          </div>
           <h1
             className="title-main text-center"
             style={{ marginBottom: "30px", fontWeight: "bold" }}
           >
             Owned assets
           </h1>
-          <OwnAssestList />
+          <div className="d-flex flex-column gap-4">
+            <OwnAssestList />
+          </div>
         </div>
       </main>
 

@@ -1,13 +1,15 @@
 import Image from "next/image";
 import styles from "../styles/Card.module.css"
-export default function Card({ data, buyNft, key }) {
+import MaticIcon from "./MaticIcon.js"
+
+export default function Card({ data, buyNft, k }) {
 
   const handleOpenPreview = () => {
     document.dispatchEvent(new CustomEvent('openpreview', {'detail': data}))
   }
 
   return (
-    <div key={key} className="mb-5 card-width mr-4">
+    <div key={k} className="mb-5 mr-4">
       <div className="card shadow margin-56">
         <div>
         <Image
@@ -24,7 +26,7 @@ export default function Card({ data, buyNft, key }) {
             {data.name}
           </h5>
           <h5 className="card-title">
-            {data.price} <b>ETH</b>
+            {data.price} <MaticIcon/>
           </h5>
           <div className="row">
             <div className="col-6">
@@ -37,8 +39,6 @@ export default function Card({ data, buyNft, key }) {
               </button>
             </div>
           </div>
-          <br />
-          <p className="card-text">{data.desc}</p>
         </div>
       </div>
     </div>

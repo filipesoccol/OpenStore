@@ -3,26 +3,25 @@ import { NFTAddress, NFTMarketAddress } from "../services/config";
 import UserCard from "./UserCard";
 import NFT from "./artifacts/NFT.json";
 import NFTMarket from "./artifacts/NFTMarket.json";
-import Web3ModalService from "../services/web3modal";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
+import Web3ModalService from "../services/web3modal";
 
-const ItemList = () => {
+const OwnAssetsList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeout( async () => {
-      setIsLoading(true);
-      await Web3ModalService.callModal()
+      setIsLoading(true)
       await getItems();
       setIsLoading(false);
     }, 0)
   }, []);
 
   const getItems = async () => {
-    if (!Web3ModalService.getProvider) await Web3ModalService.callModal()
+    if (!Web3ModalService.getProvider()) await Web3ModalService.callModal()
     const provider = Web3ModalService.getProvider()
     const signer = provider.getSigner();
     const marketContract = new ethers.Contract(
@@ -31,7 +30,9 @@ const ItemList = () => {
       signer
     );
     const tokenContract = new ethers.Contract(NFTAddress, NFT.abi, provider);
-    const data = await marketContract.fetchCreateNFTs();
+    const data = await marketContract.fetchPurchasedNFTs();
+
+    console.log(data);
 
     let newItems = await Promise.all(
       data.map(async (d) => {
@@ -46,6 +47,7 @@ const ItemList = () => {
           owner: d.owner,
           image: meta.data.image,
           name: meta.data.name,
+          category: meta.data.category,
           description: meta.data.description,
         };
       })
@@ -56,17 +58,28 @@ const ItemList = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-      }}
-    >
+    <>
+    {!isLoading && items.length > 0 && (
+    <div className="col-12 d-flex flex-row flex-wrap">
       {items.length &&
         items.map((item, key) => <UserCard key={key} data={item} />)}
     </div>
+    )}
+    {!isLoading && items.length == 0 && (
+      <div className="text-center my-4">
+        <div>No owned items ...</div>
+      </div>
+    )}
+    {isLoading && (
+        <div className="text-center my-4">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+          <div>Loading ...</div>
+        </div>
+      )}
+    </>
   );
 };
 
-export default ItemList;
+export default OwnAssetsList;

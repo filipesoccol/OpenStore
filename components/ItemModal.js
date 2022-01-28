@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import MaticIcon from "./MaticIcon.js"
 import styles from '../styles/ItemModal.module.css'
 
 export default function ItemModal() {
@@ -46,7 +47,7 @@ export default function ItemModal() {
                 {data.name}
               </h5>
               <h5 className="card-title">
-                {data.price} <b>ETH</b>
+                {data.price} <MaticIcon/>
               </h5>
               <div className="row">
                 <div className="col-6">

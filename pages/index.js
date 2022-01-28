@@ -20,11 +20,11 @@ export default function Home() {
         <title>Blockchain Based NFT Application</title>
         <meta name="description" content="Blockchain based NFT application" />
       </Head>
-      <Display />
       <main
         style={{ marginTop: "30px", marginBottom: "50px", minHeight: "50vh" }}
       >
         <div className="container">
+          <Display />
           <h1
             className="title-main text-center"
             style={{ marginBottom: "30px", fontWeight: "bold" }}

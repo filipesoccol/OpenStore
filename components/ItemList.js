@@ -100,13 +100,24 @@ const ItemList = () => {
           <option value="others">Others</option>
         </select>
       </div>
+      {isLoading && (
+        <div className="text-center my-4">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+          <div>Loading ...</div>
+        </div>
+      )}
+      {!isLoading && items.length == 0 && (
+        <div className="text-center my-4">
+          <h1 className="h4">No items for selected category</h1>
+        </div>
+      )}
       <div className="col-12 d-flex flex-row flex-wrap">
-        {items.length > 0 ? (
+        {items.length > 0 && (
           items.map((item, key) => (
             <Card key={key} buyNft={buyNft} data={item} />
           ))
-        ) : (
-          <h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>
         )}
       </div>
     </div>
