@@ -1,7 +1,11 @@
 import Image from "next/image";
-import MaticIcon from "./MaticIcon.js"
 
 export default function Card({ data, k }) {
+
+  const handleOpenPreview = () => {
+    document.dispatchEvent(new CustomEvent('openpreview', {'detail': data}))
+  }
+
   return (
     <div key={k} className="mb-5 mr-4">
       <div className="card shadow margin-56">
@@ -12,6 +16,7 @@ export default function Card({ data, k }) {
           alt="Card image cap"
           width={200}
           height={200}
+          onClick={handleOpenPreview}
         />
         </div>
         <div className="card-body">

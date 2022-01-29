@@ -32,7 +32,9 @@ const ItemList = () => {
     );
     let data;
     if (category == "all") {
-      data = await marketContract.getMarketItems();
+      data = await marketContract.getItemsByCategory('art')
+      data = data.concat(await marketContract.getItemsByCategory('track'))
+      data = data.concat(await marketContract.getItemsByCategory('others'));
     } else {
       data = await marketContract.getItemsByCategory(category);
     }
@@ -88,17 +90,11 @@ const ItemList = () => {
 
   return (
     <div className="d-flex flex-column gap-4">
-      <div className="col-12 col-sm-6 col-md-4 mb-4">
-        <select
-          name="category"
-          id="category"
-          onChange={(e) => setFilterCategory(e.target.value)}
-        >
-          <option value="all">All</option>
-          <option value="art">Art</option>
-          <option value="track">Track</option>
-          <option value="others">Others</option>
-        </select>
+      <div className="col-12 mb-4">
+          <button className="btn btn-outline btn-pill" onClick={(e) => setFilterCategory('all')}>All</button>
+          <button className="btn btn-outline btn-pill" onClick={(e) => setFilterCategory('art')}>Art</button>
+          <button className="btn btn-outline btn-pill" onClick={(e) => setFilterCategory('track')}>Track</button>
+          <button className="btn btn-outline btn-pill" onClick={(e) => setFilterCategory('others')}>Others</button>
       </div>
       {isLoading && (
         <div className="text-center my-4">

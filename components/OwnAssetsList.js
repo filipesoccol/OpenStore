@@ -42,12 +42,13 @@ const OwnAssetsList = () => {
 
         return {
           price,
+          contract: d.nftContract,
           tokenId: d.tokenId.toNumber(),
           seller: d.seller,
           owner: d.owner,
           image: meta.data.image,
           name: meta.data.name,
-          category: meta.data.category,
+          category: d.category,
           description: meta.data.description,
         };
       })
